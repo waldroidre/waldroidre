@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="es-CL">
+
+  <head>
+    <title>Simulador Medicina 2026</title>
+    <meta charset="utf-8">
+    <meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover">
+    <meta name="claude:viewport-fit-sides" content="cover">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap">
+    <style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style><meta name="theme-color" content="#1d4ed8"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="apple-mobile-web-app-title" content="Medicina 2026"><link rel="manifest" href="./manifest.json"><link rel="icon" type="image/png" sizes="192x192" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMAAAADACAIAAADdvvtQAAABwElEQVR42u3SAQ0AIAhFQYpYyfy2kQ5uuDHu7SeAi7WP2fPCCQwgA8gAMoDMADKADCADyAwgA8gAMoDMADKADCADyAwgA8gAMoAMIDOArC2gq1YBJIAEEEAAAQQQQAJIAAkggAACSAAJIAEEEEAACSABJIAAAgggASSABBBAAAEEEEACSAB5CUAAAQSQABJAAggggAASQAJIAAEEEEACSAAJIIAAAggggASQAAIIIIAAAkgACSABBBBAAAkgASSAAAIIIAEkgAQQQAABJIAEkAACCCCAAAJIAAkgAQQQQAAJIAEkgAACCCABJIAEEEAAASSABJAAAggggAACSAAJIIAAAggggASQABJAAAEEkAASQAIIIIAAEkACSAABBBBAAAEkgAQQQAABBBBAAkgACSCAAAJIAAkgAQQQQAAJIAEkgAACCCABJIAEEEAAAQQQQAJIAAkggAACSAAJIAEEEEAACSABJIAAAgggASSABBBAAAEEEEACSAABBBBAAAEkgASQAAIIIIAEkAASQAABVA3IZg4gA8gAMoAMIDOADCADyAAyA8gAMoAMIDOADCADyAAyA8gAMoAMIAPIDCD7vgTjPJzQg+L3EgAAAABJRU5ErkJggg=="><link rel="apple-touch-icon" sizes="180x180" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAABmElEQVR42u3SsQ0AIAhFQRZxJed3G+msKC0IuZc/AVysfczKhRMYHAaHwWFwGBwGh8FhcBgcBocZHAaHwWFwGBwGh8FhcBgcBofZRxxXLYNDcAgOwSE4BIc3wAEHHHDAAQcccMABh+AQHIJDcAgOwQEHHHDAAQcccMABh+AQHIJDcAgOwQEHHHDAAQcccMABh+AQHIJDcAgOwQEHHHDAAQcccMABBxxwCA7BITgEh+AQHHDAAQcccMABBxxwCA7BITgEh+AQHHDAAQcccMABBxxwCA7BITgEh+AQHHDAAQcccMABBxxwwAGH4BAcgkNwCA7BAQcccMABBxxwwAGH4BAcgkNwCA7BAQcccMABBxxwwAGH4BAcgkNwCA7BAQcccMABBxxwwAEHHHAIDsEhOASH4BAccMABBxxwwAEHHHAIDsEhOASH4BAccMABBxxwwAEHHHAIDsEhOASH4BAccMABBxxwwAEHHHDAAYf64rCpg8PgMDgMDoPD4DA4DA6Dw+AwOMzgMDgMDoPD4DA4DA6Dw+AwOMzeEnDTftV+xHqpAAAAAElFTkSuQmCC">
+  
+  <style>
+/* Layout: cabecera + KPIs, panel simulador a la izquierda del filtro, barras de margen y tabla ancha con scroll propio */
+:root{--bg:#f6f7f9;--surface:#fff;--fg:#14202e;--muted:#5d6b7c;--line:#dde2e8;--accent:#1d4ed8;--accent-soft:#e3ebff;--good:#15803d;--good-bg:#dcf5e3;--warn:#a16207;--warn-bg:#fdf0c9;--bad:#b91c1c;--bad-bg:#fde0e0;--na:#6b7280;--na-bg:#eceef1;--bar:#c9d3e3;--demre-bg:#e0e7ff;--demre-fg:#1e40af;--part-bg:#f3e8ff;--part-fg:#6b21a8}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f151d;--surface:#17202b;--fg:#e6ebf1;--muted:#93a1b3;--line:#2a3646;--accent:#7aa2ff;--accent-soft:#1f2d4d;--good:#5fd68a;--good-bg:#15321f;--warn:#f0c052;--warn-bg:#3a2f12;--bad:#ff8585;--bad-bg:#3d1a1a;--na:#9aa5b4;--na-bg:#222c39;--bar:#33445d;--demre-bg:#1e2b4d;--demre-fg:#93c5fd;--part-bg:#331e4d;--part-fg:#d8b4fe;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0f151d;--surface:#17202b;--fg:#e6ebf1;--muted:#93a1b3;--line:#2a3646;--accent:#7aa2ff;--accent-soft:#1f2d4d;--good:#5fd68a;--good-bg:#15321f;--warn:#f0c052;--warn-bg:#3a2f12;--bad:#ff8585;--bad-bg:#3d1a1a;--na:#9aa5b4;--na-bg:#222c39;--bar:#33445d;--demre-bg:#1e2b4d;--demre-fg:#93c5fd;--part-bg:#331e4d;--part-fg:#d8b4fe;color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font:14px/1.5 Inter,system-ui,sans-serif;padding-block:24px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:1280px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
+h1,h2{font-family:"Space Grotesk",Inter,sans-serif;margin:0;text-wrap:balance}
+h1{font-size:28px;line-height:1.15}h2{font-size:16px}
+.sub{color:var(--muted);margin:4px 0 0;max-width:70ch}
+.top-filter-bar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:10px 14px}
+.filter-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+.filter-group{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.filter-sep{width:1px;height:22px;background:var(--line);margin:0 4px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px 14px;min-width:0}
+.kpi b{display:block;font:700 26px "Space Grotesk",sans-serif;font-variant-numeric:tabular-nums}
+.kpi span{color:var(--muted);font-size:12px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:16px;min-width:0}
+.top{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:20px}
+@media(max-width:860px){.top{grid-template-columns:1fr}.filter-sep{display:none}}
+.inputs{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-top:12px}
+label{display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--muted);font-weight:500;text-transform:uppercase;letter-spacing:.04em}
+input[type=number],input[type=search],input[type=text],select{font:inherit;color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:8px 10px;width:100%;font-variant-numeric:tabular-nums;text-transform:none;letter-spacing:0}
+input:focus-visible,select:focus-visible,button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.hint{color:var(--muted);font-size:12px;margin:10px 0 0}
+.bar-actions{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:12px}
+.chip,.chip-tipo{border:1px solid var(--line);background:var(--bg);color:var(--fg);font:inherit;padding:6px 12px;border-radius:999px;cursor:pointer;font-size:13px}
+.chip[aria-pressed=true],.chip-tipo[aria-pressed=true]{background:var(--accent);border-color:var(--accent);color:var(--bg);font-weight:600}
+.btn-export{border:1px solid var(--accent);background:var(--accent);color:var(--bg);font:inherit;font-weight:600;padding:7px 14px;border-radius:6px;cursor:pointer}
+.btn-export:hover{opacity:.92}
+.grow{flex:1;min-width:160px}
+.chart{display:flex;flex-direction:column;gap:5px;max-height:420px;overflow-y:auto;padding-right:4px}
+.row{display:grid;grid-template-columns:minmax(110px,190px) 1fr 64px;gap:8px;align-items:center;font-size:12px}
+.row .nm{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.track{position:relative;height:14px;background:var(--na-bg);border-radius:3px}
+.track::after{content:"";position:absolute;left:50%;top:-2px;bottom:-2px;width:1px;background:var(--muted)}
+.fill{position:absolute;top:0;bottom:0;border-radius:3px}
+.val{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
+.legend{color:var(--muted);font-size:12px;margin-top:8px}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:1560px;font-variant-numeric:tabular-nums}
+th,td{padding:8px 10px;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap}
+th{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);background:var(--bg);position:sticky;top:0;z-index:1}
+td.n,th.n{text-align:right}
+tr:last-child td{border-bottom:0}
+td.u{white-space:normal;min-width:190px;font-weight:600}
+td.c-cell{min-width:250px}
+.comment-box{display:flex;gap:6px;align-items:center}
+.comment-input{min-width:150px;padding:5px 8px!important;font-size:12px}
+.btn-save{border:1px solid var(--line);background:var(--bg);color:var(--fg);font:inherit;font-size:12px;font-weight:600;padding:5px 10px;border-radius:6px;cursor:pointer;white-space:nowrap}
+.btn-save:hover{border-color:var(--accent);color:var(--accent)}
+.btn-save.saved{background:var(--good-bg);border-color:var(--good);color:var(--good)}
+.saved-note{font-size:11px;color:var(--muted);margin-top:3px;min-height:15px}
+.pill{display:inline-block;padding:2px 9px;border-radius:999px;font-size:12px;font-weight:600}
+.s-good{background:var(--good-bg);color:var(--good)}.s-warn{background:var(--warn-bg);color:var(--warn)}.s-bad{background:var(--bad-bg);color:var(--bad)}.s-na{background:var(--na-bg);color:var(--na)}
+.t-demre{background:var(--demre-bg);color:var(--demre-fg)}.t-part{background:var(--part-bg);color:var(--part-fg)}
+.pos{color:var(--good)}.neg{color:var(--bad)}
+a{color:var(--accent)}
+.notes{color:var(--muted);font-size:12px;line-height:1.6}.notes li{margin-bottom:4px}
+</style>
+  </head>
+<body>
+
+  
+<div class="wrap">
+  <header>
+    <h1>Simulador de Medicina 2026</h1>
+    <p class="sub">Universidades del CRUCH y privadas adscritas al Sistema de Acceso con Medicina en las regiones Metropolitana, Valparaíso y Coquimbo. Ingresa tus puntajes y compara tu puntaje ponderado con el corte 2026 de cada sede.</p>
+  </header>
+
+  <section class="top-filter-bar" aria-label="Filtro superior de tipo de institución">
+    <span class="filter-label">Tipo de universidad:</span>
+    <div class="filter-group">
+      <button class="chip-tipo" data-t="Todas" aria-pressed="true">TODAS</button>
+      <button class="chip-tipo" data-t="DEMRE" aria-pressed="false">DEMRE</button>
+      <button class="chip-tipo" data-t="PARTICULAR" aria-pressed="false">PARTICULAR</button>
+    </div>
+    <span class="hint" style="margin:0 0 0 auto">Filtra los indicadores superiores, gráfico y tabla.</span>
+  </section>
+
+  <section class="kpis" id="kpis"></section>
+
+  <section class="top">
+    <div class="panel">
+      <h2>Tus puntajes (escala PAES 100 a 1000)</h2>
+      <div class="inputs">
+        <label for="i-nem">NEM<input type="number" id="i-nem" min="100" max="1000" value="850"></label>
+        <label for="i-rank">Ranking<input type="number" id="i-rank" min="100" max="1000" value="880"></label>
+        <label for="i-len">Lenguaje<input type="number" id="i-len" min="100" max="1000" value="860"></label>
+        <label for="i-m1">Matemática M1<input type="number" id="i-m1" min="100" max="1000" value="900"></label>
+        <label for="i-cie">Ciencias<input type="number" id="i-cie" min="100" max="1000" value="870"></label>
+      </div>
+      <p class="hint">Valores de ejemplo: reemplázalos por los tuyos. Ponderado = suma de (puntaje × % de la sede) ÷ 100. Estado: sobre el corte, cerca (hasta 20 puntos bajo) o bajo el corte.</p>
+    </div>
+    <div class="panel">
+      <h2>Diferencia vs. corte 2026</h2>
+      <div class="chart" id="chart"></div>
+      <p class="legend">Barra a la derecha de la línea central: tu ponderado supera el corte. Escala: ±60 puntos.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="bar-actions">
+      <button class="chip" data-r="Todas" aria-pressed="true">Todas</button>
+      <button class="chip" data-r="Metropolitana" aria-pressed="false">Metropolitana</button>
+      <button class="chip" data-r="Valparaíso" aria-pressed="false">Valparaíso</button>
+      <button class="chip" data-r="Coquimbo" aria-pressed="false">Coquimbo</button>
+      <span class="filter-sep" aria-hidden="true"></span>
+      <button class="chip-tipo" data-t="Todas" aria-pressed="true">TODAS</button>
+      <button class="chip-tipo" data-t="DEMRE" aria-pressed="false">DEMRE</button>
+      <button class="chip-tipo" data-t="PARTICULAR" aria-pressed="false">PARTICULAR</button>
+      <input class="grow" type="search" id="q" placeholder="Buscar universidad, sede o comentario" aria-label="Buscar universidad, sede o comentario">
+      <select id="sort" aria-label="Ordenar">
+        <option value="diff">Ordenar por mi diferencia</option>
+        <option value="corte">Ordenar por corte 2026</option>
+        <option value="ara">Ordenar por arancel (menor)</option>
+        <option value="cupos">Ordenar por cupos</option>
+        <option value="u">Ordenar por nombre</option>
+      </select>
+      <button type="button" class="btn-export" id="btn-export">Exportar a Excel</button>
+    </div>
+    <div class="tablewrap">
+      <table>
+        <thead><tr>
+          <th>Universidad</th><th>Tipo</th><th>Sede</th><th>Ubicación</th><th>Región</th><th class="n">Semestres</th><th class="n">Corte 2026</th><th class="n">Cupos</th><th class="n">Matrícula</th><th class="n">Arancel anual</th>
+          <th class="n">% NEM</th><th class="n">% Ranking</th><th class="n">% Lenguaje</th><th class="n">% M1</th><th class="n">% Ciencias</th>
+          <th class="n">Mi ponderado</th><th class="n">Diferencia</th><th>Estado</th><th>Comentarios</th><th>Detalle</th>
+        </tr></thead>
+        <tbody id="tb"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2>Notas sobre los datos</h2>
+    <ul class="notes">
+      <li>Clasificación Tipo (DEMRE / PARTICULAR): Todas las universidades listadas participan en el Sistema de Acceso centralizado administrado por DEMRE. Se etiqueta como <b>DEMRE</b> a las instituciones pertenecientes al Consejo de Rectores de las Universidades Chilenas (CRUCH: PUC, U. de Chile, USACH, U. de Valparaíso, UCN y U. de La Serena, además de UDP y U. de los Andes que se incorporaron al CRUCH) y como <b>PARTICULAR</b> a las universidades privadas fuera del CRUCH adscritas al Sistema de Acceso (UDD, UFT, USS, UNAB, U. Autónoma, U. Mayor, U. del Alba, UBO, U. Central y UAHC).</li>
+      <li>Cortes 2026: puntaje ponderado del último seleccionado en admisión regular (DEMRE), según Calculadora PAES, Filadd y PreUAI. Cupos corresponden a vacantes regulares de admisión 2027, sin BEA ni PACE. Aranceles y matrículas 2026 vienen de SIES/mifuturo.cl, vía Calculadora PAES. Verifica todo en demre.cl y en cada universidad antes de decidir.</li>
+      <li>Semestres: ninguna fuente lo informa por sede. Se usa 14 semestres (7 años con internado), dato general de la carrera. Es referencial.</li>
+      <li>UDD y Universidad de los Andes publican valores en UF; se muestran los pesos que calcula la fuente con la UF del 1 de enero de 2026.</li>
+      <li>Hay diferencias entre fuentes: PreUAI muestra un arancel de $9.930.000 para la PUC y $8.607.500 para la U. de Chile; aquí se usan los de sus fichas de detalle ($10.720.000 y $9.468.300).</li>
+      <li>U. del Alba pondera "Ciencias o Historia" (la que más favorezca); el simulador usa tu puntaje de Ciencias. En todas las sedes el campo Ciencias corresponde a la prueba electiva.</li>
+      <li>U. Andrés Bello Las Condes y U. Academia de Humanismo Cristiano no tienen corte 2026 publicado, y no se encontró arancel para ellas; se muestran como "Sin corte". La sede UNAB Las Condes aparece solo en Calculadora PAES.</li>
+      <li>La Ubicación de cada sede es la comuna o ciudad que informan las fuentes.</li>
+      <li>Los comentarios que grabes quedan guardados en este navegador (<code>localStorage</code>) y se incluyen al exportar a Excel.</li>
+    </ul>
+  </section>
+</div>
+
+<script>
+var SEM=14, B="https://www.calculadorapaes.cl/puntaje-corte-medicina-", STORAGE_KEY="simulador_medicina_2026_comentarios_v1";
+// u,tipo,sede,loc,region,corte,cupos,mat,ara,[nem,rank,len,m1,cie],link
+var D=[
+["Pontificia Universidad Católica de Chile","DEMRE","Santiago","Santiago","Metropolitana",958.4,95,195000,10720000,[20,20,15,20,25],"puc"],
+["Universidad del Desarrollo","PARTICULAR","Las Condes","Las Condes, Santiago","Metropolitana",956.4,90,1589000,12476000,[20,20,10,40,10],"udd"],
+["Universidad de los Andes","DEMRE","Las Condes","Las Condes, Santiago","Metropolitana",944.0,72,1510000,12436000,[10,15,20,35,20],"uandes"],
+["Universidad de Santiago de Chile","DEMRE","Estación Central","Estación Central, Santiago","Metropolitana",939.35,40,212000,8262000,[10,40,15,15,20],"usach"],
+["Universidad Finis Terrae","PARTICULAR","Providencia","Providencia, Santiago","Metropolitana",935.25,45,1042000,11620000,[15,25,15,30,15],"uft"],
+["Universidad de Chile","DEMRE","Santiago","Santiago","Metropolitana",931.15,190,217600,9468300,[10,20,15,20,35],"uchile"],
+["Universidad Diego Portales","DEMRE","Santiago","Santiago","Metropolitana",930.9,65,1178000,11784000,[10,20,20,40,10],"udp"],
+["Universidad San Sebastián","PARTICULAR","Santiago","Santiago","Metropolitana",911.3,130,709700,11730000,[10,10,30,40,10],"uss"],
+["Universidad Andrés Bello","PARTICULAR","República","Santiago","Metropolitana",910.55,150,911000,11730000,[10,30,15,20,25],"unab"],
+["Universidad Autónoma de Chile","PARTICULAR","Providencia","Providencia, Santiago","Metropolitana",906.9,55,670000,11170000,[20,25,20,25,10],"ua"],
+["Universidad Mayor","PARTICULAR","Huechuraba","Huechuraba, Santiago","Metropolitana",904.85,70,1217200,11465086,[10,20,15,25,30],"umayor"],
+["Universidad del Alba","PARTICULAR","Providencia","Providencia, Santiago","Metropolitana",902.8,70,304000,9900000,[30,40,10,10,10],"udalba"],
+["Universidad Bernardo O'Higgins","PARTICULAR","Santiago","Santiago","Metropolitana",891.5,60,700000,11000000,[10,25,10,30,25],"ubo"],
+["Universidad Central de Chile","PARTICULAR","Santiago","Santiago","Metropolitana",890.85,50,670000,10770000,[10,25,20,25,20],"ucentral"],
+["Universidad Andrés Bello","PARTICULAR","Las Condes","Las Condes, Santiago","Metropolitana",null,75,null,null,[10,30,15,20,25],"unab"],
+["Universidad Academia de Humanismo Cristiano","PARTICULAR","Santiago","Santiago","Metropolitana",null,30,null,null,[25,25,15,15,20],"uahc"],
+["Universidad de Valparaíso","DEMRE","Casa Central","Valparaíso","Valparaíso",919.9,74,226000,8589000,[10,30,20,20,20],"uv"],
+["Universidad Andrés Bello","PARTICULAR","Viña del Mar","Viña del Mar","Valparaíso",890.5,150,911000,10344000,[10,30,15,20,25],"unab"],
+["Universidad de Valparaíso","DEMRE","San Felipe","San Felipe","Valparaíso",890.2,50,226000,8589000,[10,30,20,20,20],"uv"],
+["Universidad Católica del Norte","DEMRE","Coquimbo (Guayacán)","Coquimbo","Coquimbo",896.15,54,195000,8331000,[10,20,25,25,20],"ucn"],
+["Universidad del Alba","PARTICULAR","La Serena","La Serena","Coquimbo",894.0,50,288000,9390000,[30,40,10,10,10],"udalba"],
+["Universidad de La Serena","DEMRE","La Serena","La Serena","Coquimbo",883.05,38,226580,7374000,[15,20,20,25,20],"uls"]
+].map(function(r){var key=r[0]+"||"+r[2];return{key:key,u:r[0],tipo:r[1],sede:r[2],loc:r[3],reg:r[4],corte:r[5],cupos:r[6],mat:r[7],ara:r[8],w:r[9],link:B+r[10]+".html",comentario:""}});
+
+function loadComments(){
+  try{
+    var raw=localStorage.getItem(STORAGE_KEY);
+    if(!raw)return;
+    var map=JSON.parse(raw);
+    D.forEach(function(d){if(map&&typeof map[d.key]==="string")d.comentario=map[d.key];});
+  }catch(_e){}
+}
+function persistComments(){
+  try{
+    var map={};
+    D.forEach(function(d){if(d.comentario)map[d.key]=d.comentario;});
+    localStorage.setItem(STORAGE_KEY,JSON.stringify(map));
+  }catch(_e){}
+}
+loadComments();
+
+var reg="Todas", tipo="Todas", lastSavedKey=null, $=function(i){return document.getElementById(i)};
+var money=function(n){return n==null?"—":"$"+Math.round(n).toLocaleString("es-CL")};
+var f1=function(n){return n.toLocaleString("es-CL",{minimumFractionDigits:1,maximumFractionDigits:2})};
+function scores(){return ["i-nem","i-rank","i-len","i-m1","i-cie"].map(function(i){var v=parseFloat($(i).value);return isNaN(v)?0:Math.max(0,Math.min(1000,v))})}
+function enrich(){var s=scores();return D.map(function(d){var p=d.w.reduce(function(a,w,i){return a+w*s[i]},0)/100;var diff=d.corte==null?null:p-d.corte;return Object.assign({},d,{pond:p,diff:diff})})}
+function status(d){if(d.diff==null)return['s-na','Sin corte'];if(d.diff>=0)return['s-good','Sobre el corte'];if(d.diff>=-20)return['s-warn','Cerca'];return['s-bad','Bajo el corte']}
+function esc(t){return String(t).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function escAttr(t){return esc(t).replace(/'/g,"&#39;")}
+
+function getFilteredRows(){
+  var q=$("q").value.trim().toLowerCase(), sort=$("sort").value;
+  var rows=enrich().filter(function(d){
+    return (reg==="Todas"||d.reg===reg)
+      && (tipo==="Todas"||d.tipo===tipo)
+      && (!q||(d.u+" "+d.tipo+" "+d.sede+" "+d.loc+" "+(d.comentario||"")).toLowerCase().indexOf(q)>-1);
+  });
+  rows.sort(function(a,b){
+    if(sort==="u")return a.u.localeCompare(b.u,"es");
+    var k=sort==="diff"?"diff":sort, dir=(sort==="ara")?1:-1;
+    var av=a[k],bv=b[k]; if(av==null&&bv==null)return 0; if(av==null)return 1; if(bv==null)return -1; return (av-bv)*dir;
+  });
+  return rows;
+}
+
+function setTipoFilter(val){
+  tipo=val;
+  Array.prototype.forEach.call(document.querySelectorAll(".chip-tipo"),function(x){
+    x.setAttribute("aria-pressed",x.dataset.t===tipo);
+  });
+  render();
+}
+
+function saveComment(key){
+  var input=document.querySelector('input.comment-input[data-key="'+key.replace(/"/g,'\"')+'"]');
+  if(!input)return;
+  var val=input.value.trim();
+  var item=D.find(function(d){return d.key===key;});
+  if(!item)return;
+  item.comentario=val;
+  persistComments();
+  lastSavedKey=key;
+  render();
+  var updatedBtn=document.querySelector('button.btn-save[data-key="'+key.replace(/"/g,'\"')+'"]');
+  if(updatedBtn){
+    updatedBtn.classList.add("saved");
+    updatedBtn.textContent="Grabado";
+    setTimeout(function(){
+      if(updatedBtn){
+        updatedBtn.classList.remove("saved");
+        updatedBtn.textContent="Grabar";
+      }
+    },1800);
+  }
+}
+
+function exportToExcel(){
+  var rows=getFilteredRows();
+  var headers=[
+    "Universidad","Tipo","Sede","Ubicación","Región","Semestres","Corte 2026","Cupos",
+    "Matrícula","Arancel anual","% NEM","% Ranking","% Lenguaje","% M1","% Ciencias",
+    "Mi ponderado","Diferencia","Estado","Comentarios"
+  ];
+  var htmlRows=rows.map(function(d){
+    var st=status(d)[1];
+    var diffText=d.diff==null?"—":((d.diff>=0?"+":"")+f1(d.diff));
+    var corteText=d.corte==null?"—":f1(d.corte);
+    var cells=[
+      d.u, d.tipo, d.sede, d.loc, d.reg, SEM, corteText, d.cupos,
+      money(d.mat), money(d.ara),
+      d.w[0]+"%", d.w[1]+"%", d.w[2]+"%", d.w[3]+"%", d.w[4]+"%",
+      f1(d.pond), diffText, st, d.comentario||""
+    ];
+    return "<tr>"+cells.map(function(c){return "<td>"+esc(c)+"</td>";}).join("")+"</tr>";
+  }).join("");
+
+
+var tableHtml = '\ufeff<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">'
+  + '<head><meta charset="utf-8"></head><body><table border="1"><thead><tr>'
+  + headers.map(function(h){ return "<th>" + esc(h) + "</th>"; }).join("")
+  + '</tr></thead><tbody>' + htmlRows + '</tbody></table></body></html>';
+
+
+
+  var blob=new Blob([tableHtml],{type:"application/vnd.ms-excel;charset=utf-8;"});
+  var url=URL.createObjectURL(blob);
+  var a=document.createElement("a");
+  var dateStr=new Date().toISOString().slice(0,10);
+  a.href=url;
+  a.download="Simulador_Medicina_2026_"+dateStr+".xls";
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(function(){URL.revokeObjectURL(url);},500);
+}
+
+function render(){
+  var rows=getFilteredRows();
+  var withCut=rows.filter(function(d){return d.diff!=null});
+  var over=withCut.filter(function(d){return d.diff>=0}).length;
+  var best=withCut.slice().sort(function(a,b){return b.diff-a.diff})[0];
+  var commentedCount=rows.filter(function(d){return d.comentario&&d.comentario.trim().length>0}).length;
+
+  $("kpis").innerHTML=
+    '<div class="kpi"><b>'+rows.length+'</b><span>Sedes en la vista ('+esc(tipo)+')</span></div>'+
+    '<div class="kpi"><b>'+over+' / '+withCut.length+'</b><span>Sedes donde superas el corte</span></div>'+
+    '<div class="kpi"><b>'+(best?(best.diff>=0?"+":"")+f1(best.diff):"—")+'</b><span>'+(best?"Mejor margen: "+esc(best.u)+" ("+esc(best.sede)+")":"Mejor margen")+'</span></div>'+
+    '<div class="kpi"><b>'+(withCut.length?f1(withCut.reduce(function(a,d){return a+d.corte},0)/withCut.length):"—")+'</b><span>Corte 2026 promedio</span></div>'+
+    '<div class="kpi"><b>'+commentedCount+'</b><span>Sedes con comentario</span></div>';
+
+  $("tb").innerHTML=rows.map(function(d){
+    var st=status(d);
+    var tipoClass=d.tipo==="DEMRE"?"t-demre":"t-part";
+    var noteText=d.comentario?(lastSavedKey===d.key?"Actualizado: "+d.comentario:d.comentario):"Sin comentario grabado";
+    return '<tr><td class="u">'+esc(d.u)+'</td><td><span class="pill '+tipoClass+'">'+esc(d.tipo)+'</span></td><td>'+esc(d.sede)+'</td><td>'+esc(d.loc)+'</td><td>'+d.reg+'</td><td class="n">'+SEM+'</td>'+
+    '<td class="n">'+(d.corte==null?"—":f1(d.corte))+'</td><td class="n">'+d.cupos+'</td><td class="n">'+money(d.mat)+'</td><td class="n">'+money(d.ara)+'</td>'+
+    d.w.map(function(w){return '<td class="n">'+w+'%</td>'}).join("")+
+    '<td class="n"><b>'+f1(d.pond)+'</b></td><td class="n '+(d.diff==null?'':d.diff>=0?'pos':'neg')+'">'+(d.diff==null?"—":(d.diff>=0?"+":"")+f1(d.diff))+'</td>'+
+    '<td><span class="pill '+st[0]+'">'+st[1]+'</span></td>'+
+    '<td class="c-cell"><div class="comment-box"><input type="text" class="comment-input" data-key="'+escAttr(d.key)+'" value="'+escAttr(d.comentario||"")+'" placeholder="Escribe un comentario..."><button type="button" class="btn-save" data-key="'+escAttr(d.key)+'">Grabar</button></div><div class="saved-note">'+esc(noteText)+'</div></td>'+
+    '<td><a href="'+d.link+'" target="_blank" rel="noopener">Ver ficha</a></td></tr>';
+  }).join("")||'<tr><td colspan="20">No hay sedes que coincidan con el filtro.</td></tr>';
+
+  $("chart").innerHTML=withCut.map(function(d){
+    var c=Math.max(-60,Math.min(60,d.diff)), pct=Math.abs(c)/60*50, col=d.diff>=0?'var(--good)':d.diff>=-20?'var(--warn)':'var(--bad)';
+    var pos=d.diff>=0?'left:50%;width:'+pct+'%':'right:50%;width:'+pct+'%';
+    return '<div class="row"><span class="nm" title="'+esc(d.u+" · "+d.sede)+'">'+esc(short(d.u)+" · "+d.sede)+'</span><div class="track"><div class="fill" style="'+pos+';background:'+col+'"></div></div><span class="val">'+(d.diff>=0?"+":"")+f1(d.diff)+'</span></div>';
+  }).join("")||'<p class="legend">Sin datos para graficar.</p>';
+}
+function short(n){return n.replace("Pontificia Universidad Católica de Chile","U. Católica").replace("Universidad ","U. ").replace("de Santiago de Chile","USACH").replace("Católica del Norte","Católica Norte").replace("Academia de Humanismo Cristiano","UAHC")}
+
+Array.prototype.forEach.call(document.querySelectorAll(".chip"),function(b){b.addEventListener("click",function(){reg=b.dataset.r;Array.prototype.forEach.call(document.querySelectorAll(".chip"),function(x){x.setAttribute("aria-pressed",x===b)});render()})});
+Array.prototype.forEach.call(document.querySelectorAll(".chip-tipo"),function(b){b.addEventListener("click",function(){setTipoFilter(b.dataset.t)})});
+["i-nem","i-rank","i-len","i-m1","i-cie","q","sort"].forEach(function(i){$(i).addEventListener("input",render)});
+$("btn-export").addEventListener("click",exportToExcel);
+
+$("tb").addEventListener("click",function(e){
+  var btn=e.target.closest("button.btn-save");
+  if(btn)saveComment(btn.getAttribute("data-key"));
+});
+$("tb").addEventListener("keydown",function(e){
+  if(e.key==="Enter"&&e.target.classList.contains("comment-input")){
+    e.preventDefault();
+    saveComment(e.target.getAttribute("data-key"));
+  }
+});
+
+render();
+</script>
+
+<script>
+if ("serviceWorker" in navigator &&
+    (location.protocol === "https:" || location.hostname === "localhost")) {
+  window.addEventListener("load", function () {
+    navigator.serviceWorker.register("./sw.js").catch(console.error);
+  });
+}
+</script>
+
+</body></html>
